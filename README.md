@@ -1,2 +1,2 @@
-# Verilog
+# Verilog Project 
 Synchronous Flip Flop
