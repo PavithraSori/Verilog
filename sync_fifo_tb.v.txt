@@ -1,0 +1,87 @@
+module tb_sync_fifo;
+   parameter data_width = 8;
+   parameter fifo_depth = 8;
+   parameter addr_width = 3;
+   reg clk,rst,wr_en,rd_en;
+   reg [data_width-1:0]datain;
+   wire empty,full,rd_vd;
+   wire [data_width-1:0]dataout;
+
+   sync_fifo # (
+   .data_width (data_width),
+   .fifo_depth(fifo_depth),
+   .addr_width(addr_width)) dut_fifo(
+   .clk(clk),
+   .rst(rst),
+   .wr_en(wr_en),
+   .rd_en(rd_en),
+   .datain(datain),
+   .empty(empty),
+   .full(full),
+   .rd_vd(rd_vd),
+   .dataout (dataout));
+
+   always #10 clk = ~clk;
+   
+   initial begin
+      clk = 0;
+      rst =1;
+      wr_en=0;
+      rd_en=0;
+      datain='d0;
+
+   end
+   
+   always@(posedge clk)
+      begin
+      #100;
+      rst=0;
+      wr_en = 1;
+      datain = 'd55;
+      #20;
+      wr_en =1;
+      datain = 'd65;
+      #20;
+      wr_en =1;
+      datain = 'd75;
+      #20;
+      wr_en = 1;
+      datain = 'd95;
+      #20;
+      wr_en =1;
+      datain = 'd105;
+      #20;
+      wr_en =1;
+      datain ='d115;
+      #20;
+      wr_en = 1;
+      datain ='d125;
+      #20;
+      wr_en =0;
+      #20;
+      rd_en =1;
+      #80;
+      rd_en=0;
+      #40;
+      wr_en =1;
+      datain = 'd135;
+      #20;
+      wr_en=1;
+      datain ='d145;
+      #20;
+      wr_en = 1;
+      datain= 'd155;
+      #20;
+      wr_en=1;
+      datain='d165;
+      #20;
+      wr_en=0;
+      #40;
+      rd_en=1;
+      #160;
+      rd_en=0;
+      end
+
+endmodule
+
+      
