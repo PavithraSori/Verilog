@@ -1,1 +1,1 @@
-# Synchronous Flipflop
+# Synchronous FIFO
